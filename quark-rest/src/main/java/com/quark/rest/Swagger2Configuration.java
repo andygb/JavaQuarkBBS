@@ -29,7 +29,7 @@ public class Swagger2Configuration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Quark BBS 接口文档")
+                .title("DeadKafka城堡 接口文档")
                 .contact("LHR")
                 .version("1.0")
                 .build();

@@ -45,17 +45,17 @@ public class UserAuthHandler extends SimpleChannelInboundHandler {
     @Autowired
     private ChannelManager manager;
 
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        //Http请求（第一次握手）
-        if (msg instanceof FullHttpRequest){
-            handleHttpRequest(ctx, (FullHttpRequest) msg);
-        }
-        //处理WebSocket请求
-        else if (msg instanceof WebSocketFrame){
-            handleWebSocket(ctx, (WebSocketFrame) msg);
-        }
-    }
+//    @Override
+//    protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+//        //Http请求（第一次握手）
+//        if (msg instanceof FullHttpRequest){
+//            handleHttpRequest(ctx, (FullHttpRequest) msg);
+//        }
+//        //处理WebSocket请求
+//        else if (msg instanceof WebSocketFrame){
+//            handleWebSocket(ctx, (WebSocketFrame) msg);
+//        }
+//    }
 
     /**
      * 内部链路检测
@@ -161,5 +161,17 @@ public class UserAuthHandler extends SimpleChannelInboundHandler {
 
         //MessageHandler处理
         ctx.fireChannelRead(frame.retain());
+    }
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, Object msg) throws Exception {
+        //Http请求（第一次握手）
+        if (msg instanceof FullHttpRequest){
+            handleHttpRequest(channelHandlerContext, (FullHttpRequest) msg);
+        }
+        //处理WebSocket请求
+        else if (msg instanceof WebSocketFrame){
+            handleWebSocket(channelHandlerContext, (WebSocketFrame) msg);
+        }
     }
 }

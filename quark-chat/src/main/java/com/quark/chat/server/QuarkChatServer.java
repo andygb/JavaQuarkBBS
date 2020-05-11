@@ -68,32 +68,32 @@ public class QuarkChatServer implements Server {
         logger.info("server init");
         int cpus = Runtime.getRuntime().availableProcessors();
 
-        defaultGroup = new DefaultEventLoopGroup(8, new ThreadFactory() {
+        defaultGroup = new DefaultEventLoopGroup(8, Executors.newCachedThreadPool(new ThreadFactory() {
             private AtomicInteger index = new AtomicInteger(0);
 
             @Override
             public Thread newThread(Runnable r) {
                 return new Thread(r, "DEFAULTGROUP" + index.incrementAndGet());
             }
-        });
+        }));
 
-        bossGroup = new NioEventLoopGroup(cpus, new ThreadFactory() {
+        bossGroup = new NioEventLoopGroup(cpus, Executors.newCachedThreadPool(new ThreadFactory() {
             private AtomicInteger index = new AtomicInteger(0);
 
             @Override
             public Thread newThread(Runnable r) {
                 return new Thread(r, "BOSSGROUP" + index.incrementAndGet());
             }
-        });
+        }));
 
-        workGroup = new NioEventLoopGroup(cpus * 10, new ThreadFactory() {
+        workGroup = new NioEventLoopGroup(cpus * 10, Executors.newCachedThreadPool(new ThreadFactory() {
             private AtomicInteger index = new AtomicInteger(0);
 
             @Override
             public Thread newThread(Runnable r) {
                 return new Thread(r, "WORKGROUP" + index.incrementAndGet());
             }
-        });
+        }));
 
         bootstrap = new ServerBootstrap();
         executorService = Executors.newScheduledThreadPool(2);

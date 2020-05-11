@@ -1,9 +1,6 @@
 package com.quark.common;
 
-import com.quark.common.dao.LabelDao;
-import com.quark.common.dao.NotificationDao;
-import com.quark.common.dao.PostsDao;
-import com.quark.common.dao.UserDao;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +17,21 @@ import javax.sql.DataSource;
 @EnableCaching//缓存支持
 @SpringBootTest
 public class CommonApplicationTest {
-
-    @Autowired
-    private DataSource dataSource;
-
-    @Autowired
-    private UserDao UserDao;
-
-    @Autowired
-    private PostsDao postsDao;
-
-    @Autowired
-    private LabelDao labelDao;
-
-    @Autowired
-    private NotificationDao notificationDao;
+//
+//    @Autowired
+//    private DataSource dataSource;
+//
+//    @Autowired
+//    private UserDao UserDao;
+//
+//    @Autowired
+//    private PostsDao postsDao;
+//
+//    @Autowired
+//    private LabelDao labelDao;
+//
+//    @Autowired
+//    private NotificationDao notificationDao;
 
     @Test
     public void TestDataSource(){

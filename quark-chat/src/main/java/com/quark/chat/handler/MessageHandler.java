@@ -32,15 +32,15 @@ public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFra
     @Autowired
     private ChannelManager manager;
 
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws Exception {
-        ChatUser chatUser = manager.getChatUser(ctx.channel());
-        if (chatUser!=null&&chatUser.isAuth()){
-            QuarkClientProtocol clientProto = JSON.parseObject(frame.text(), new TypeReference<QuarkClientProtocol>(){});
-            //广播消息
-            manager.broadMessage(QuarkChatProtocol.buildMessageCode(chatUser.getUser(),clientProto.getMsg()));
-        }
-    }
+//    @Override
+//    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws Exception {
+//        ChatUser chatUser = manager.getChatUser(ctx.channel());
+//        if (chatUser!=null&&chatUser.isAuth()){
+//            QuarkClientProtocol clientProto = JSON.parseObject(frame.text(), new TypeReference<QuarkClientProtocol>(){});
+//            //广播消息
+//            manager.broadMessage(QuarkChatProtocol.buildMessageCode(chatUser.getUser(),clientProto.getMsg()));
+//        }
+//    }
 
     /**
      * Channel取消注册
@@ -65,5 +65,15 @@ public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFra
         logger.error("connection error and close the channel:{}",cause);
         manager.removeChannel(ctx.channel());
         manager.broadMessage(QuarkChatProtocol.buildSysUserInfo(manager.getUsers()));
+    }
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws Exception {
+        ChatUser chatUser = manager.getChatUser(ctx.channel());
+        if (chatUser!=null&&chatUser.isAuth()){
+            QuarkClientProtocol clientProto = JSON.parseObject(frame.text(), new TypeReference<QuarkClientProtocol>(){});
+            //广播消息
+            manager.broadMessage(QuarkChatProtocol.buildMessageCode(chatUser.getUser(),clientProto.getMsg()));
+        }
     }
 }
